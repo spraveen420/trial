@@ -1,0 +1,34 @@
+<mat-form-field appearance="outline" title="Change style property of the dropdown" style="width: 300px;">
+    <mat-label>Style</mat-label>
+    <textarea matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['style']"></textarea>
+  </mat-form-field>
+  
+  <mat-form-field appearance="outline" title="Change class property of the dropdown"  style="width: 300px;">
+    <mat-label>Class</mat-label>
+    <textarea matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['class']"></textarea>
+  </mat-form-field>
+  
+  <mat-form-field appearance="outline" title="Change title property of the dropdown"  style="width: 300px;">
+    <mat-label>Title</mat-label>
+    <textarea matInput
+              cdkTextareaAutosize
+              #autosize="cdkTextareaAutosize"
+              cdkAutosizeMinRows="1"
+              cdkAutosizeMaxRows="10" [(ngModel)]="elementProps['title']"></textarea>
+  </mat-form-field>
+  <br/>
+  <mat-slide-toggle title="Click to disable the dropdown" [(ngModel)]="elementProps['disabled']">Disabled</mat-slide-toggle>
+  <br/>
+  <mat-slide-toggle title="Click to make multiple selection on the dropdown" [(ngModel)]="elementProps['multiple']">Multiple</mat-slide-toggle>
+  <br/>
+  <mat-slide-toggle title="Click to make dropdown required" [(ngModel)]="elementProps['required']">Required</mat-slide-toggle>
+  <br/><br/>
+  <button mat-raised-button color="primary" (click)="setDropDownProps(elementProps['id'])">Modify</button>

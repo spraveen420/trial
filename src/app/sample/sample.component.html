@@ -1,0 +1,165 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="over" position="end" [(opened)]="open" style="width: 400px;background-color:#CAC9C9;">
+      <i class="fas fa-window-close fa-lg" (click)="close()" style="color: red;float: right;cursor: pointer;margin:10px;"></i>
+      <br/>
+      <h5 *ngIf="elementProps['name']!=undefined"><b><u>{{elementProps['name']}}&nbsp;({{elementProps['id']}})</u></b></h5>
+      <div *ngIf="elementProps">
+          <mat-form-field *ngIf="elementProps['style']!=undefined" appearance="outline" title="Change style property of the element" style="width: 300px;">
+            <mat-label>Style</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['style']"></textarea>
+          </mat-form-field>
+          
+          <mat-form-field *ngIf="elementProps['class']!=undefined" appearance="outline" title="Change class property of the element"  style="width: 300px;">
+            <mat-label>Class</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['class']"></textarea>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['title']!=undefined" appearance="outline" title="Change title(tooltip) property of the element"  style="width: 300px;">
+            <mat-label>Title</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['title']"></textarea>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['pattern']!=undefined" appearance="outline" title="Change regex pattern property to accept input of the element"  style="width: 300px;">
+            <mat-label>Pattern</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['pattern']"></textarea>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['src']!=undefined" appearance="outline" title="Change source property of the image"  style="width: 300px;">
+            <mat-label>src</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['src']"></textarea>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['href']!=undefined" appearance="outline" title="Change href property of the link"  style="width: 300px;">
+            <mat-label>href</mat-label>
+            <textarea matInput
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['href']"></textarea>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['type']!=undefined && elementProps['name']=='Textbox'" appearance="outline" title="Change input type of the element"  style="width: 300px;">
+            <mat-label>Type</mat-label>
+            <mat-select [(ngModel)]="elementProps['type']">
+              <mat-option value="text">Text</mat-option>
+              <mat-option value="number">Number</mat-option>
+              <mat-option value="password">Password</mat-option>
+              <mat-option value="email">Email</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['type']!=undefined && elementProps['name']=='Button'" appearance="outline" title="Change input type of the element"  style="width: 300px;">
+            <mat-label>Type</mat-label>
+            <mat-select [(ngModel)]="elementProps['type']">
+              <mat-option value="button">Button</mat-option>
+              <mat-option value="reset">Reset</mat-option>
+              <mat-option value="submit">Submit</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['target']!=undefined" appearance="outline" title="Change target property of link"  style="width: 300px;">
+            <mat-label>Target</mat-label>
+            <mat-select [(ngModel)]="elementProps['target']">
+              <mat-option value="_blank">_blank</mat-option>
+              <mat-option value="_self">_self</mat-option>
+              <mat-option value="_parent">_parent</mat-option>
+              <mat-option value="_top">_top</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['pname']!=undefined" appearance="outline" title="Change name property of the element"  style="width: 300px;">
+            <mat-label>Name</mat-label>
+            <input matInput [(ngModel)] = "elementProps['pname']">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['value']!=undefined" appearance="outline" title="Change value property of the element"  style="width: 300px;">
+            <mat-label>Value<span *ngIf="elementProps['name']=='Calendar'">(YYYY-MM-DD)</span></mat-label>
+            <input matInput [(ngModel)] = "elementProps['value']">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['max']!=undefined" appearance="outline" title="Change max date property of the element"  style="width: 300px;">
+            <mat-label>Max Date(YYYY-MM-DD)</mat-label>
+            <input matInput [(ngModel)] = "elementProps['max']">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['min']!=undefined" appearance="outline" title="Change min date property of the element"  style="width: 300px;">
+            <mat-label>Min Date(YYYY-MM-DD)</mat-label>
+            <input matInput [(ngModel)] = "elementProps['min']">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['alt']!=undefined" appearance="outline" title="Change alt property of the element"  style="width: 300px;">
+            <mat-label>Alt text</mat-label>
+            <input matInput [(ngModel)] = "elementProps['alt']">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['width']!=undefined" appearance="outline" title="Change width property of the element"  style="width: 300px;">
+            <mat-label>Width</mat-label>
+            <input matInput [(ngModel)] = "elementProps['width']" type="number">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['height']!=undefined" appearance="outline" title="Change height property of the element"  style="width: 300px;">
+            <mat-label>Height</mat-label>
+            <input matInput [(ngModel)] = "elementProps['height']" type="number">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['placeholder']!=undefined" appearance="outline" title="Change placeholder property of the element"  style="width: 300px;">
+            <mat-label>Placeholder</mat-label>
+            <input matInput [(ngModel)] = "elementProps['placeholder']">
+          </mat-form-field>
+
+          <br *ngIf="elementProps['readonly']!=undefined"/>
+          <mat-slide-toggle *ngIf="elementProps['readonly']!=undefined" title="Click to make element readonly" [(ngModel)]="elementProps['readonly']">ReadOnly</mat-slide-toggle>
+          <br *ngIf="elementProps['multiple']!=undefined"/>
+          <mat-slide-toggle *ngIf="elementProps['multiple']!=undefined" title="Click to make multiple selection on the dropdown" [(ngModel)]="elementProps['multiple']">Multiple</mat-slide-toggle>
+          <br *ngIf="elementProps['required']!=undefined"/>
+          <mat-slide-toggle *ngIf="elementProps['required']!=undefined" title="Click to make element required" [(ngModel)]="elementProps['required']">Required</mat-slide-toggle>
+          <br/><br/>
+          <button *ngIf="elementProps" mat-raised-button color="primary" (click)="propertySet(elementProps['id'])">Modify</button>
+          </div><br/><br/>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+      <div *ngIf="data" class="content" [p3x-compile]="data" 
+      [p3x-compile-ctx]="this"
+      [p3x-compile-error-handler]="handleCompileErrorHandler"
+      [p3x-compile-module]="dataModule"></div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+
+<div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
+  [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+</div>
+
+<mat-menu  #contextMenu="matMenu">
+  <ng-template matMenuContent let-src="src" style="text-align: center;">
+          <input *ngIf="dropdownValidate(src)" [(ngModel)]="option" mat-menu-item placeholder="option">
+          <span *ngIf="dropdownValidate(src)">
+          <span  *ngFor="let op of ddOptions; index as i">
+              <span [class]="labelClasses[i%4]" style="padding: 5px;border-radius: 10px;">{{op}}&nbsp;<i class="fas fa-times-circle" style="color: red;cursor: pointer;" title="Click to remove option" (click)="deleteOption(src,i)"></i></span>&nbsp;
+          </span><br/><br/></span>
+
+          <button *ngIf="dropdownValidate(src)" mat-stroked-button color="primary" title="Click to add option" (click)="addOption(src)">Add</button>
+          <button *ngIf="true" mat-menu-item (click)="propertyGet(src);" title="Click to modify properties of element">Properties</button>
+  </ng-template>
+</mat-menu>

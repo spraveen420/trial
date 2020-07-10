@@ -1,0 +1,11 @@
+
+
+<div style="text-align: center;margin: 5%;">
+  <button  class="btn btn-warning" [title]="(num<=0) ? '' : fileName[num-1]" [disabled]="num<=0" (click)="prev()"><i class="fas fa-arrow-alt-circle-left fa-lg"></i>&nbsp;Prev</button>&nbsp;&nbsp;
+  <span style="font-weight: bold;"><tr>{{num+1}}/{{fileName.length}}</tr><tr>{{fileName[num]}}</tr></span>&nbsp;&nbsp;
+    <button  class="btn btn-warning" [title]="(num>=fileName.length-1) ? '' : fileName[num+1]" [disabled]="num>=fileName.length-1" (click)="next()">Next&nbsp;<i class="fas fa-arrow-alt-circle-right fa-lg"></i></button >
+    <ngx-spinner color="#8B008B" size="large" type="ball-clip-rotate-pulse"></ngx-spinner>
+    <app-sample style="text-align: center;" [data]="content"></app-sample>
+  
+  <button class="btn btn-success" (click)="save()"><i class="fas fa-save fa-lg"></i>&nbsp;Save</button>
+  </div>
