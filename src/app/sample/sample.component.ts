@@ -164,6 +164,7 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     props['class'] = dd.className;
     props['style'] = dd.style.cssText;
     props['title'] = dd.title;
+    props['pname'] = dd.name;
     props['multiple'] = dd.multiple;
     props['required'] = dd.required;
     return props;
@@ -174,6 +175,7 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     dd.className = modProps['class'];
     dd.style.cssText = modProps['style'];
     dd.title = modProps['title'];
+    dd.name = modProps['pname'];
     dd.multiple = modProps['multiple'];
     dd.required = modProps['required'];
   }
@@ -212,6 +214,7 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     props['class'] = tb.className;
     props['style'] = tb.style.cssText;
     props['title'] = tb.title;
+    props['pname'] = tb.name;
     props['placeholder'] = tb.placeholder;
     props['readonly'] = tb.readOnly;
     props['required'] = tb.required;
@@ -226,6 +229,7 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     tb.className = modProps['class'];
     tb.style.cssText = modProps['style'];
     tb.title = modProps['title'];
+    tb.name = modProps['pname'];
     tb.placeholder = modProps['placeholder'];
     tb.readOnly = modProps['readonly'];
     tb.required = modProps['required'];
@@ -242,6 +246,7 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     props['class'] = cal.className;
     props['style'] = cal.style.cssText;
     props['title'] = cal.title;
+    props['pname'] = cal.name;
     props['required'] = cal.required;
     props['readonly'] = cal.readOnly;
     props['value'] = cal.value;
@@ -255,6 +260,7 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     cal.className = modProps['class'];
     cal.style.cssText = modProps['style'];
     cal.title = modProps['title'];
+    cal.name = modProps['pname'];
     cal.required = modProps['required'];
     cal.readOnly = modProps['readonly'];
     cal.value = modProps['value'];
@@ -337,6 +343,9 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     props['style'] = button.style.cssText;
     props['title'] = button.title;
     props['type'] = button.type;
+    props['formmethod'] = button.formMethod;
+    props['formaction'] = button.formAction;
+    props['formtarget'] = button.formTarget;
     return props;
   }
 
@@ -346,6 +355,9 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     button.style.cssText = modProps['style'];
     button.title = modProps['title'];
     button.type = modProps['type'];
+    button.formMethod = modProps['formmethod'];
+    button.formAction = modProps['formaction'];
+    button.formTarget = modProps['formtarget'];
   }
 
 }

@@ -77,6 +77,33 @@
             </mat-select>
           </mat-form-field>
 
+          <mat-form-field *ngIf="elementProps['formaction']!=undefined" appearance="outline" title="Change formaction property of the button"  style="width: 300px;">
+            <mat-label>formaction</mat-label>
+            <textarea matInput placeholder="eg: http://localhost:8080/sample"
+                      cdkTextareaAutosize
+                      #autosize="cdkTextareaAutosize"
+                      cdkAutosizeMinRows="1"
+                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['formaction']"></textarea>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['formmethod']!=undefined" appearance="outline" title="Change formmethod property of button"  style="width: 300px;">
+            <mat-label>formmethod</mat-label>
+            <mat-select [(ngModel)]="elementProps['formmethod']">
+              <mat-option value="post">POST</mat-option>
+              <mat-option value="get">GET</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['formtarget']!=undefined" appearance="outline" title="Change formtarget property of button"  style="width: 300px;">
+            <mat-label>formtarget</mat-label>
+            <mat-select [(ngModel)]="elementProps['formtarget']">
+              <mat-option value="_blank">_blank</mat-option>
+              <mat-option value="_self">_self</mat-option>
+              <mat-option value="_parent">_parent</mat-option>
+              <mat-option value="_top">_top</mat-option>
+            </mat-select>
+          </mat-form-field>
+
           <mat-form-field *ngIf="elementProps['target']!=undefined" appearance="outline" title="Change target property of link"  style="width: 300px;">
             <mat-label>Target</mat-label>
             <mat-select [(ngModel)]="elementProps['target']">

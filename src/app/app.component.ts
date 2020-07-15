@@ -36,26 +36,22 @@ export class AppComponent implements OnInit {
       data => {
         // this.originalHtml = data;
         this.content = data;
-
-        const parser = new DOMParser();
-        const el = parser.parseFromString(data, 'text/html');
-        this.originalHtml = el.getElementById('div0');
-        const num = this.content.indexOf('div');
-        let i = 100; let pos = 0;
-        this.content = this.content.slice(0, num + 3) + ' ' + 'contenteditable="true"' + this.content.slice(num + 3);
-        while (pos !== -1) {
-          pos = this.content.indexOf('class', i + 1);
-          // console.log(pos);
-          if (pos !== -1) {
-            // this.content = this.content.slice(0, pos + 7 ) + ' ' + 'element' + ' ' + this.content.slice(pos + 7);
-            this.content = this.content.slice(0, pos ) + ' ' + 'ngDraggable' + ' ' + this.content.slice(pos);
-            // this.content = this.content.slice(0, pos ) + ' ' + 'rzHandles="all"' + ' ' + this.content.slice(pos);
-            // this.content = this.content.slice(0, pos ) + ' ' + 'ngResizable' + ' ' + this.content.slice(pos);
-          }
-          i = this.content.indexOf('class', i + 1) + 1;
-          // console.log(i);
-        }
-        // console.log(this.content);
+        const ind = this.content.indexOf('div');
+    // let i = 100; let pos = 0;
+        this.content = this.content.slice(0, ind + 3) + ' ' + 'contenteditable="true"' + this.content.slice(ind + 3);
+    // while (pos !== -1) {
+    //   pos = content.indexOf('class', i + 1);
+    //   if (pos !== -1) {
+    //     content = content.slice(0, pos) + ' ' + 'ngDraggable' + ' ' + content.slice(pos);
+    //   }
+    //   i = content.indexOf('class', i + 1) + 1;
+    // }
+    // content = content.split('class="table ').join('ngDraggable class="table ');
+    // content = content.split('class=""').join('ngDraggable class=""');
+    // content = content.split('class="form-control"').join('ngDraggable class="form-control"');
+    // content = content.split('class="btn ').join('ngDraggable class="btn ');
+    // content = content.split('class="img-fluid"').join('ngDraggable class="img-fluid"');
+        this.content = this.content.slice(0, 100) + this.content.slice(100).split('id=').join('ngDraggable id=');
         this.spinner.hide();
       },
       err => {
@@ -79,52 +75,39 @@ export class AppComponent implements OnInit {
   }
 
   save() {
-    // this.spinner.show();
-    let doc = document.getElementById('div0');
-    // console.log(typeof doc);
-    // console.log(doc);
-    let doc1 = doc.children[0].children[0].children;
-    let odoc = this.originalHtml.children[0].children[0].children;
-    for (let d = 0; d < doc1.length; d++) {
-      // tslint:disable-next-line: max-line-length
-    doc1[d]['style'].top = (+(doc1[d]['style'].top.match(/(-?[0-9\.]+)/g)[0])) + (+(doc1[d]['style'].transform.match(/(-?[0-9\.]+)/g)[1])) + 'px';
-    // tslint:disable-next-line: max-line-length
-    doc1[d]['style'].left = (+(doc1[d]['style'].left.match(/(-?[0-9\.]+)/g)[0])) + (+(doc1[d]['style'].transform.match(/(-?[0-9\.]+)/g)[0])) + 'px';
-    odoc[d]['style'].top = doc1[d]['style'].top;
-    odoc[d]['style'].left = doc1[d]['style'].left;
-    if (doc1[d].id.search(/(radio\d*|checkbox\d*|button\d*|link\d*|label\d*)/) === 0) {
-      odoc[d].innerText = doc1[d]['innerText'];
-      if (doc1[d].id.search(/(radio\d*|checkbox\d*)/) === 0) {
-        odoc[d].setAttribute('value', doc1[d]['innerText']);
-      }
-      if (doc1[d].id.search(/link\d*/) === 0) {
-        odoc[d].setAttribute('href', doc1[d]['innerText']);
+    const doc = document.getElementById('code');
+    const doc1 = doc.children[0].children;
+    for(let m=0 ; m < doc1.length; m++) {
+      let docm = doc1[m].children;
+      for (let d = 0; d < docm.length; d++) {
+        // tslint:disable-next-line: max-line-length
+        docm[d]['style'].top = (+(docm[d]['style'].top.match(/(-?[0-9\.]+)/g)[0])) + (+(docm[d]['style'].transform.match(/(-?[0-9\.]+)/g)[1])) + 'px';
+        // tslint:disable-next-line: max-line-length
+        docm[d]['style'].left = (+(docm[d]['style'].left.match(/(-?[0-9\.]+)/g)[0])) + (+(docm[d]['style'].transform.match(/(-?[0-9\.]+)/g)[0])) + 'px';
       }
     }
-    }
-    console.log(odoc[0]);
-    console.log(this.originalHtml);
-    // let doc2 = doc.outerHTML.split('\n').join(' ');
-    // doc2 = doc2.split('contenteditable="true"').join('');
-    // doc2 = doc2.split('ng-reflect-ng-draggable=""').join('');
-    // doc2 = doc2.split('ngdraggable=""').join('');
-    // doc2 = doc2.split('ng-draggable').join('');
-    // doc2 = doc2.split(/ transform: translate\(\-?\d*\.?\d*px, \-?\d*\.?\d*px\);/).join('');
-
-    // this.appService
-    //   .update({
-    //     fileName: this.fileName[this.num],
-    //     code: this.originalHtml
-    //   })
-    //   .subscribe(
-    //     data => {
-    //       console.log(data);
-    //       this.getData(this.fileName[this.num]);
-    //       // this.spinner.hide();
-    //     },
-    //     err => {
-    //       console.log(err);
-    //     }
-    //   );
+    let doc2 = doc.outerHTML;
+    doc2 = doc2.split('contenteditable="true"').join('');
+    doc2 = doc2.split('ng-reflect-ng-draggable=""').join('');
+    doc2 = doc2.split('ngdraggable=""').join('');
+    doc2 = doc2.split('ng-draggable').join('');
+    doc2 = doc2.split(/transform: translate\(\-?\d*\.?\d*px, \-?\d*\.?\d*px\);/).join('');
+    // doc2 = doc2.split(/transform: translate\(\-?\d*\.?\d*px, \-?\d*\.?\d*px\);/).join('');
+    console.log(doc1);
+    this.appService
+      .update({
+        fileName: this.fileName[this.num],
+        code: doc2
+      })
+      .subscribe(
+        () => {
+          this.getData(this.fileName[this.num]);
+          this.spinner.hide();
+        },
+        err => {
+          this.spinner.hide();
+          console.log(err);
+        }
+      );
   }
 }
