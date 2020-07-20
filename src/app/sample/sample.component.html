@@ -1,5 +1,5 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="over" position="end" [(opened)]="open" style="width: 400px;background-color:#CAC9C9;">
+  <mat-sidenav #sidenav mode="side" position="end" [(opened)]="open" style="width: 400px;">
       <i class="fas fa-window-close fa-lg" (click)="close()" style="color: red;float: right;cursor: pointer;margin:10px;"></i>
       <br/>
       <h5 *ngIf="elementProps['name']!=undefined"><b><u>{{elementProps['name']}}&nbsp;({{elementProps['id']}})</u></b></h5>
@@ -10,7 +10,8 @@
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['style']"></textarea>
+                      cdkAutosizeMaxRows="20" 
+                      [(ngModel)]="elementProps['style']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
           </mat-form-field>
           
           <mat-form-field *ngIf="elementProps['class']!=undefined" appearance="outline" title="Change class property of the element"  style="width: 300px;">
@@ -19,7 +20,8 @@
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['class']"></textarea>
+                      cdkAutosizeMaxRows="20" 
+                      [(ngModel)]="elementProps['class']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['title']!=undefined" appearance="outline" title="Change title(tooltip) property of the element"  style="width: 300px;">
@@ -28,7 +30,8 @@
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['title']"></textarea>
+                      cdkAutosizeMaxRows="20" 
+                      [(ngModel)]="elementProps['title']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['pattern']!=undefined" appearance="outline" title="Change regex pattern property to accept input of the element"  style="width: 300px;">
@@ -37,7 +40,8 @@
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['pattern']"></textarea>
+                      cdkAutosizeMaxRows="20" 
+                      [(ngModel)]="elementProps['pattern']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['src']!=undefined" appearance="outline" title="Change source property of the image"  style="width: 300px;">
@@ -46,7 +50,8 @@
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['src']"></textarea>
+                      cdkAutosizeMaxRows="20" 
+                      [(ngModel)]="elementProps['src']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['href']!=undefined" appearance="outline" title="Change href property of the link"  style="width: 300px;">
@@ -55,12 +60,13 @@
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['href']"></textarea>
+                      cdkAutosizeMaxRows="20" 
+                      [(ngModel)]="elementProps['href']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['type']!=undefined && elementProps['name']=='Textbox'" appearance="outline" title="Change input type of the element"  style="width: 300px;">
             <mat-label>Type</mat-label>
-            <mat-select [(ngModel)]="elementProps['type']">
+            <mat-select [(ngModel)]="elementProps['type']" (ngModelChange) = "propertySet(elementProps['id'])">
               <mat-option value="text">Text</mat-option>
               <mat-option value="number">Number</mat-option>
               <mat-option value="password">Password</mat-option>
@@ -70,7 +76,7 @@
 
           <mat-form-field *ngIf="elementProps['type']!=undefined && elementProps['name']=='Button'" appearance="outline" title="Change input type of the element"  style="width: 300px;">
             <mat-label>Type</mat-label>
-            <mat-select [(ngModel)]="elementProps['type']">
+            <mat-select [(ngModel)]="elementProps['type']" (ngModelChange) = "propertySet(elementProps['id'])">
               <mat-option value="button">Button</mat-option>
               <mat-option value="reset">Reset</mat-option>
               <mat-option value="submit">Submit</mat-option>
@@ -83,12 +89,13 @@
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="20" [(ngModel)]="elementProps['formaction']"></textarea>
+                      cdkAutosizeMaxRows="20" 
+                      [(ngModel)]="elementProps['formaction']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['formmethod']!=undefined" appearance="outline" title="Change formmethod property of button"  style="width: 300px;">
             <mat-label>formmethod</mat-label>
-            <mat-select [(ngModel)]="elementProps['formmethod']">
+            <mat-select [(ngModel)]="elementProps['formmethod']" (ngModelChange) = "propertySet(elementProps['id'])">
               <mat-option value="post">POST</mat-option>
               <mat-option value="get">GET</mat-option>
             </mat-select>
@@ -96,7 +103,7 @@
 
           <mat-form-field *ngIf="elementProps['formtarget']!=undefined" appearance="outline" title="Change formtarget property of button"  style="width: 300px;">
             <mat-label>formtarget</mat-label>
-            <mat-select [(ngModel)]="elementProps['formtarget']">
+            <mat-select [(ngModel)]="elementProps['formtarget']" (ngModelChange) = "propertySet(elementProps['id'])">
               <mat-option value="_blank">_blank</mat-option>
               <mat-option value="_self">_self</mat-option>
               <mat-option value="_parent">_parent</mat-option>
@@ -106,7 +113,7 @@
 
           <mat-form-field *ngIf="elementProps['target']!=undefined" appearance="outline" title="Change target property of link"  style="width: 300px;">
             <mat-label>Target</mat-label>
-            <mat-select [(ngModel)]="elementProps['target']">
+            <mat-select [(ngModel)]="elementProps['target']" (ngModelChange) = "propertySet(elementProps['id'])">
               <mat-option value="_blank">_blank</mat-option>
               <mat-option value="_self">_self</mat-option>
               <mat-option value="_parent">_parent</mat-option>
@@ -116,53 +123,57 @@
 
           <mat-form-field *ngIf="elementProps['pname']!=undefined" appearance="outline" title="Change name property of the element"  style="width: 300px;">
             <mat-label>Name</mat-label>
-            <input matInput [(ngModel)] = "elementProps['pname']">
+            <input matInput [(ngModel)] = "elementProps['pname']" (ngModelChange) = "propertySet(elementProps['id'])">
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['value']!=undefined" appearance="outline" title="Change value property of the element"  style="width: 300px;">
             <mat-label>Value<span *ngIf="elementProps['name']=='Calendar'">(YYYY-MM-DD)</span></mat-label>
-            <input matInput [(ngModel)] = "elementProps['value']">
+            <input matInput [(ngModel)] = "elementProps['value']" (ngModelChange) = "propertySet(elementProps['id'])">
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['max']!=undefined" appearance="outline" title="Change max date property of the element"  style="width: 300px;">
             <mat-label>Max Date(YYYY-MM-DD)</mat-label>
-            <input matInput [(ngModel)] = "elementProps['max']">
+            <input matInput [(ngModel)] = "elementProps['max']" (ngModelChange) = "propertySet(elementProps['id'])">
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['min']!=undefined" appearance="outline" title="Change min date property of the element"  style="width: 300px;">
             <mat-label>Min Date(YYYY-MM-DD)</mat-label>
-            <input matInput [(ngModel)] = "elementProps['min']">
+            <input matInput [(ngModel)] = "elementProps['min']" (ngModelChange) = "propertySet(elementProps['id'])">
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['alt']!=undefined" appearance="outline" title="Change alt property of the element"  style="width: 300px;">
             <mat-label>Alt text</mat-label>
-            <input matInput [(ngModel)] = "elementProps['alt']">
+            <input matInput [(ngModel)] = "elementProps['alt']" (ngModelChange) = "propertySet(elementProps['id'])">
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['width']!=undefined" appearance="outline" title="Change width property of the element"  style="width: 300px;">
             <mat-label>Width</mat-label>
-            <input matInput [(ngModel)] = "elementProps['width']" type="number">
+            <input matInput [(ngModel)] = "elementProps['width']" (ngModelChange) = "propertySet(elementProps['id'])" type="number">
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['height']!=undefined" appearance="outline" title="Change height property of the element"  style="width: 300px;">
             <mat-label>Height</mat-label>
-            <input matInput [(ngModel)] = "elementProps['height']" type="number">
+            <input matInput [(ngModel)] = "elementProps['height']" (ngModelChange) = "propertySet(elementProps['id'])" type="number">
           </mat-form-field>
 
           <mat-form-field *ngIf="elementProps['placeholder']!=undefined" appearance="outline" title="Change placeholder property of the element"  style="width: 300px;">
             <mat-label>Placeholder</mat-label>
-            <input matInput [(ngModel)] = "elementProps['placeholder']">
+            <input matInput [(ngModel)] = "elementProps['placeholder']" (ngModelChange) = "propertySet(elementProps['id'])">
           </mat-form-field>
 
           <br *ngIf="elementProps['readonly']!=undefined"/>
-          <mat-slide-toggle *ngIf="elementProps['readonly']!=undefined" title="Click to make element readonly" [(ngModel)]="elementProps['readonly']">ReadOnly</mat-slide-toggle>
+          <mat-slide-toggle *ngIf="elementProps['readonly']!=undefined" title="Click to make element readonly"
+           [(ngModel)]="elementProps['readonly']" (ngModelChange) = "propertySet(elementProps['id'])" >ReadOnly</mat-slide-toggle>
           <br *ngIf="elementProps['multiple']!=undefined"/>
-          <mat-slide-toggle *ngIf="elementProps['multiple']!=undefined" title="Click to make multiple selection on the dropdown" [(ngModel)]="elementProps['multiple']">Multiple</mat-slide-toggle>
+          <mat-slide-toggle *ngIf="elementProps['multiple']!=undefined" title="Click to make multiple selection on the dropdown"
+           [(ngModel)]="elementProps['multiple']" (ngModelChange) = "propertySet(elementProps['id'])" >Multiple</mat-slide-toggle>
           <br *ngIf="elementProps['required']!=undefined"/>
-          <mat-slide-toggle *ngIf="elementProps['required']!=undefined" title="Click to make element required" [(ngModel)]="elementProps['required']">Required</mat-slide-toggle>
+          <mat-slide-toggle *ngIf="elementProps['required']!=undefined" title="Click to make element required" 
+          [(ngModel)]="elementProps['required']" (ngModelChange) = "propertySet(elementProps['id'])" >Required</mat-slide-toggle>
           <br/><br/>
-          <button *ngIf="elementProps" mat-raised-button color="primary" (click)="propertySet(elementProps['id'])">Modify</button>
-          </div><br/><br/>
+          <!-- <button *ngIf="elementProps" mat-raised-button color="primary" (click)="propertySet(elementProps['id'])">Modify</button> -->
+          </div>
+          <!-- <br/><br/> -->
   </mat-sidenav>
 
   <mat-sidenav-content>

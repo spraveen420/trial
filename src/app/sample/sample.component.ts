@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation, AfterViewChecked, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, AfterViewChecked, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
 import { AngularDraggableModule } from 'angular2-draggable';
 import {
   MatMenuTrigger
@@ -10,7 +10,7 @@ import {CdkTextareaAutosize} from '@angular/cdk/text-field';
   styleUrls: ['./sample.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-export class SampleComponent implements OnInit, AfterViewChecked {
+export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
   @ViewChild('autosize') autosize: CdkTextareaAutosize;
 
 @Input()
@@ -52,6 +52,10 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     console.error(error);
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    this.open = false;
+  }
+
 
   ngAfterViewChecked(): void {
     const selectElements = document.getElementsByTagName('select');
@@ -78,6 +82,7 @@ export class SampleComponent implements OnInit, AfterViewChecked {
     });
     Array.from(buttonElements).forEach((element, index) => {
       element.addEventListener('contextmenu', this.onContextMenu.bind(this, element.id, this.contextMenuPosition, this.contextMenu));
+      // element.addEventListener('click', this.dynamicClickEventProperties.bind(this, element.id));
     });
     Array.from(tableElements).forEach((element, index) => {
       element.addEventListener('contextmenu', this.onContextMenu.bind(this, element.id, this.contextMenuPosition, this.contextMenu));
@@ -95,14 +100,20 @@ export class SampleComponent implements OnInit, AfterViewChecked {
   onContextMenu(sourceElementID, contextMenuPosition, contextMenu, event: MouseEvent) {
     const selectdiv = sourceElementID;
     event.preventDefault();
-    contextMenuPosition.x = event.clientX + 'px';
-    contextMenuPosition.y = event.clientY + 'px';
-    contextMenu.menuData = { src: selectdiv};
-    if (selectdiv.split(/[0-9+]/)[0] === 'dropdown') {
-      contextMenu.menu.focusFirstItem('mouse');
-      this.dropDown(selectdiv);
+    if (!this.open) {
+      contextMenuPosition.x = event.clientX + 'px';
+      contextMenuPosition.y = event.clientY + 'px';
+      contextMenu.menuData = { src: selectdiv};
+      if (selectdiv.split(/[0-9+]/)[0] === 'dropdown') {
+        contextMenu.menu.focusFirstItem('mouse');
+        this.dropDown(selectdiv);
+      }
+      contextMenu.openMenu();
+    } else {
+      const call = selectdiv.split(/[0-9+]/)[0];
+      this.elementProps = {};
+      this.elementProps = this.elementGetFunctions[call](selectdiv);
     }
-    contextMenu.openMenu();
   }
 
   dropDown(id) {
@@ -153,7 +164,7 @@ export class SampleComponent implements OnInit, AfterViewChecked {
   propertySet(id) {
     const call = id.split(/[0-9+]/)[0];
     this.elementSetFunctions[call](id, this.elementProps);
-    this.close();
+    // this.close();
   }
 
   getDropDownProps(id) {

@@ -1,7 +1,6 @@
 .content{
     width: 96%;
     height: 510px;
-    border: 1px solid black;
     text-align: center;
     overflow: auto;
     margin: 1%;
@@ -11,6 +10,7 @@
 
 .example-container {
   position: absolute;
+  border: 1px solid black;
   top: 0;
   bottom: 0;
   left: 0;
