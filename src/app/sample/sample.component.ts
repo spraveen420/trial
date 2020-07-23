@@ -31,14 +31,15 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
   elementGetFunctions = { dropdown: this.getDropDownProps, radio: this.getRadioCheckboxProps,
     checkbox: this.getRadioCheckboxProps, textbox: this.getTextboxProps, calendar: this.getCalendarProps,
     image: this.getImageProps, link: this.getLinkProps, table: this.getTableProps,
-    button: this.getButtonProps
+    button: this.getButtonProps, label: this.getLabelProps
   };
   elementSetFunctions = { dropdown: this.setDropDownProps, radio: this.setRadioCheckboxProps,
     checkbox: this.setRadioCheckboxProps, textbox: this.setTextboxProps, calendar: this.setCalendarProps,
     image: this.setImageProps, link: this.setLinkProps, table: this.setTableProps,
-    button: this.setButtonProps
+    button: this.setButtonProps, label: this.setLabelProps
   };
   elementProps = {};
+  styleProps = [];
 
   @ViewChild(MatMenuTrigger)
   contextMenu: MatMenuTrigger;
@@ -65,6 +66,7 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     const aElements = document.getElementsByTagName('a');
     const buttonElements = document.getElementsByTagName('button');
     const tableElements = document.getElementsByTagName('table');
+    const labelElements = document.getElementsByTagName('label');
     Array.from(pElements).forEach((element, index) => {
       element.addEventListener('contextmenu', this.onContextMenu.bind(this, element.id, this.contextMenuPosition, this.contextMenu));
     });
@@ -87,6 +89,9 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     Array.from(tableElements).forEach((element, index) => {
       element.addEventListener('contextmenu', this.onContextMenu.bind(this, element.id, this.contextMenuPosition, this.contextMenu));
     });
+    Array.from(labelElements).forEach((element, index) => {
+      element.addEventListener('contextmenu', this.onContextMenu.bind(this, element.id, this.contextMenuPosition, this.contextMenu));
+    });
 
     // for (let i = 0; i < selectElements.length; i++) {
       // console.log("id",selectElements.item(i).id)
@@ -96,6 +101,10 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     // }
   }
   constructor() {}
+
+  arrayOne(count) {
+    return Array(count);
+  }
 
   onContextMenu(sourceElementID, contextMenuPosition, contextMenu, event: MouseEvent) {
     const selectdiv = sourceElementID;
@@ -111,8 +120,12 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
       contextMenu.openMenu();
     } else {
       const call = selectdiv.split(/[0-9+]/)[0];
+      let sample = {};
       this.elementProps = {};
-      this.elementProps = this.elementGetFunctions[call](selectdiv);
+      this.styleProps = [];
+      sample = this.elementGetFunctions[call](selectdiv);
+      this.elementProps = sample['props'];
+      this.styleProps = sample['prop'];
     }
   }
 
@@ -153,11 +166,26 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     this.elementProps = {};
   }
 
+  addStyleProperty(name, value) {
+    this.elementProps['style'][name] = value;
+    this.styleProps.push(name);
+    this.propertySet(this.elementProps['id']);
+  }
+
+  deleteStylePropsrty(name) {
+    this.styleProps.splice(this.styleProps.indexOf(name), 1);
+    this.elementProps['style'][name] = '';
+  }
+
   propertyGet(id) {
    const call = id.split(/[0-9+]/)[0];
+   let sample = {};
    this.elementProps = {};
-   this.elementProps = this.elementGetFunctions[call](id);
-   console.log(this.elementProps);
+   this.styleProps = [];
+   sample = this.elementGetFunctions[call](id);
+   this.elementProps = sample['props'];
+   this.styleProps = sample['prop'];
+  //  console.log(this.elementProps);
    this.open = true;
   }
 
@@ -169,22 +197,31 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   getDropDownProps(id) {
     const props = {};
+    const prop = [];
     props['id'] = id;
     props['name'] = id.split(/[0-9+]/)[0].replace(/^./, s => s.toUpperCase());
     const dd = document.getElementById(id) as HTMLSelectElement;
     props['class'] = dd.className;
-    props['style'] = dd.style.cssText;
+    props['style'] = dd.style;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < props['style'].length; i++) {
+      prop.push(props['style'][i]);
+    }
     props['title'] = dd.title;
     props['pname'] = dd.name;
     props['multiple'] = dd.multiple;
     props['required'] = dd.required;
-    return props;
+    return {props, prop};
   }
 
   setDropDownProps(id, modProps) {
     const dd = document.getElementById(id) as HTMLSelectElement;
     dd.className = modProps['class'];
-    dd.style.cssText = modProps['style'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < modProps.length; i++) {
+        dd.style[modProps[i]] = modProps[modProps[i]];
+    }
+    // dd.style.cssText = modProps['style'];
     dd.title = modProps['title'];
     dd.name = modProps['pname'];
     dd.multiple = modProps['multiple'];
@@ -193,23 +230,32 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   getRadioCheckboxProps(id) {
     const props = {};
+    const prop = [];
     props['id'] = id;
     props['name'] = id.split(/[0-9+]/)[0].replace(/^./, s => s.toUpperCase());
     const rc = document.getElementById(id) as HTMLParagraphElement;
     props['class'] = rc.className;
-    props['style'] = rc.style.cssText;
+    props['style'] = rc.style;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < props['style'].length; i++) {
+      prop.push(props['style'][i]);
+    }
     props['title'] = rc.title;
     const irc = rc.children[0] as HTMLInputElement;
     props['value'] = irc.value;
     props['pname'] = irc.name;
     props['required'] = irc.required;
-    return props;
+    return {props, prop};
   }
 
   setRadioCheckboxProps(id, modProps) {
     const rc = document.getElementById(id) as HTMLParagraphElement;
     rc.className = modProps['class'];
-    rc.style.cssText = modProps['style'];
+    // rc.style.cssText = modProps['style'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < modProps.length; i++) {
+      rc.style[modProps[i]] = modProps[modProps[i]];
+  }
     rc.title = modProps['title'];
     const irc = rc.children[0] as HTMLInputElement;
     irc.value = modProps['value'];
@@ -219,11 +265,15 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   getTextboxProps(id) {
     const props = {};
+    const prop = [];
     props['id'] = id;
     props['name'] = id.split(/[0-9+]/)[0].replace(/^./, s => s.toUpperCase());
     const tb = document.getElementById(id) as HTMLInputElement;
     props['class'] = tb.className;
-    props['style'] = tb.style.cssText;
+    props['style'] = tb.style;
+    for (let i = 0; i < props['style'].length; i++) {
+      prop.push(props['style'][i]);
+    }
     props['title'] = tb.title;
     props['pname'] = tb.name;
     props['placeholder'] = tb.placeholder;
@@ -232,13 +282,17 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     props['type'] = tb.type;
     props['pattern'] = tb.pattern;
     props['value'] = tb.value;
-    return props;
+    return {props, prop};
   }
 
   setTextboxProps(id, modProps) {
     const tb = document.getElementById(id) as HTMLInputElement;
     tb.className = modProps['class'];
-    tb.style.cssText = modProps['style'];
+    // tb.style.cssText = modProps['style'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < modProps.length; i++) {
+      tb.style[modProps[i]] = modProps[modProps[i]];
+  }
     tb.title = modProps['title'];
     tb.name = modProps['pname'];
     tb.placeholder = modProps['placeholder'];
@@ -251,11 +305,16 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   getCalendarProps(id) {
     const props = {};
+    const prop = [];
     props['id'] = id;
     props['name'] = id.split(/[0-9+]/)[0].replace(/^./, s => s.toUpperCase());
     const cal = document.getElementById(id) as HTMLInputElement;
     props['class'] = cal.className;
-    props['style'] = cal.style.cssText;
+    props['style'] = cal.style;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < props['style'].length; i++) {
+      prop.push(props['style'][i]);
+    }
     props['title'] = cal.title;
     props['pname'] = cal.name;
     props['required'] = cal.required;
@@ -263,13 +322,17 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     props['value'] = cal.value;
     props['max'] = cal.max;
     props['min'] = cal.min;
-    return props;
+    return {props, prop};
   }
 
   setCalendarProps(id, modProps) {
     const cal = document.getElementById(id) as HTMLInputElement;
     cal.className = modProps['class'];
-    cal.style.cssText = modProps['style'];
+    // cal.style.cssText = modProps['style'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < modProps.length; i++) {
+      cal.style[modProps[i]] = modProps[modProps[i]];
+  }
     cal.title = modProps['title'];
     cal.name = modProps['pname'];
     cal.required = modProps['required'];
@@ -281,23 +344,32 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   getImageProps(id) {
     const props = {};
+    const prop = [];
     props['id'] = id;
     props['name'] = id.split(/[0-9+]/)[0].replace(/^./, s => s.toUpperCase());
     const img = document.getElementById(id) as HTMLImageElement;
     props['class'] = img.className;
-    props['style'] = img.style.cssText;
+    props['style'] = img.style;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < props['style'].length; i++) {
+      prop.push(props['style'][i]);
+    }
     props['title'] = img.title;
     props['src'] = img.src;
     props['alt'] = img.alt;
     props['height'] = img.height;
     props['width'] = img.width;
-    return props;
+    return {props, prop};
   }
 
   setImageProps(id, modProps) {
     const img = document.getElementById(id) as HTMLImageElement;
     img.className = modProps['class'];
-    img.style.cssText = modProps['style'];
+    // img.style.cssText = modProps['style'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < modProps.length; i++) {
+      img.style[modProps[i]] = modProps[modProps[i]];
+  }
     img.title = modProps['title'];
     img.src = modProps['src'];
     img.alt = modProps['alt'];
@@ -307,21 +379,30 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   getLinkProps(id) {
     const props = {};
+    const prop = [];
     props['id'] = id;
     props['name'] = id.split(/[0-9+]/)[0].replace(/^./, s => s.toUpperCase());
     const link = document.getElementById(id) as HTMLAnchorElement;
     props['class'] = link.className;
-    props['style'] = link.style.cssText;
+    props['style'] = link.style;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < props['style'].length; i++) {
+      prop.push(props['style'][i]);
+    }
     props['title'] = link.title;
     props['href'] = link.href;
     props['target'] = link.target;
-    return props;
+    return {props, prop};
   }
 
   setLinkProps(id, modProps) {
     const link = document.getElementById(id) as HTMLAnchorElement;
     link.className = modProps['class'];
-    link.style.cssText = modProps['style'];
+    // link.style.cssText = modProps['style'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < modProps.length; i++) {
+      link.style[modProps[i]] = modProps[modProps[i]];
+  }
     link.title = modProps['title'];
     link.href = modProps['href'];
     link.target = modProps['target'];
@@ -329,46 +410,91 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   getTableProps(id) {
     const props = {};
+    const prop = [];
     props['id'] = id;
     props['name'] = id.split(/[0-9+]/)[0].replace(/^./, s => s.toUpperCase());
     const table = document.getElementById(id) as HTMLTableElement;
     props['class'] = table.className;
-    props['style'] = table.style.cssText;
+    props['style'] = table.style;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < props['style'].length; i++) {
+      prop.push(props['style'][i]);
+    }
     props['title'] = table.title;
-    return props;
+    return {props, prop};
   }
 
   setTableProps(id, modProps) {
     const table = document.getElementById(id) as HTMLTableElement;
     table.className = modProps['class'];
-    table.style.cssText = modProps['style'];
+    // table.style.cssText = modProps['style'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < modProps.length; i++) {
+      table.style[modProps[i]] = modProps[modProps[i]];
+  }
     table.title = modProps['title'];
   }
 
   getButtonProps(id) {
     const props = {};
+    const prop = [];
     props['id'] = id;
     props['name'] = id.split(/[0-9+]/)[0].replace(/^./, s => s.toUpperCase());
     const button = document.getElementById(id) as HTMLButtonElement;
     props['class'] = button.className;
-    props['style'] = button.style.cssText;
+    props['style'] = button.style;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < props['style'].length; i++) {
+      prop.push(props['style'][i]);
+    }
     props['title'] = button.title;
     props['type'] = button.type;
     props['formmethod'] = button.formMethod;
     props['formaction'] = button.formAction;
     props['formtarget'] = button.formTarget;
-    return props;
+    return {props, prop};
   }
 
   setButtonProps(id, modProps) {
     const button = document.getElementById(id) as HTMLButtonElement;
     button.className = modProps['class'];
-    button.style.cssText = modProps['style'];
+    // button.style.cssText = modProps['style'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < modProps.length; i++) {
+      button.style[modProps[i]] = modProps[modProps[i]];
+  }
     button.title = modProps['title'];
     button.type = modProps['type'];
     button.formMethod = modProps['formmethod'];
     button.formAction = modProps['formaction'];
     button.formTarget = modProps['formtarget'];
+  }
+
+  getLabelProps(id) {
+    const props = {};
+    const prop = [];
+    props['id'] = id;
+    props['name'] = id.split(/[0-9+]/)[0].replace(/^./, s => s.toUpperCase());
+    const label = document.getElementById(id) as HTMLLabelElement;
+    props['class'] = label.className;
+    props['style'] = label.style;
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < props['style'].length; i++) {
+      prop.push(props['style'][i]);
+    }
+    props['title'] = label.title;
+    return {props, prop};
+  }
+
+  setLabelProps(id, modProps) {
+    const label = document.getElementById(id) as HTMLLabelElement;
+    label.className = modProps['class'];
+    // label.style.cssText = modProps['style'];
+    // tslint:disable-next-line: prefer-for-of
+    for (let i = 0; i < modProps.length; i++) {
+      label.style[modProps[i]] = modProps[modProps[i]];
+  }
+    label.title = modProps['title'];
   }
 
 }

@@ -4,7 +4,7 @@
       <br/>
       <h5 *ngIf="elementProps['name']!=undefined"><b><u>{{elementProps['name']}}&nbsp;({{elementProps['id']}})</u></b></h5>
       <div *ngIf="elementProps">
-          <mat-form-field *ngIf="elementProps['style']!=undefined" appearance="outline" title="Change style property of the element" style="width: 300px;">
+          <!-- <mat-form-field *ngIf="elementProps['style']!=undefined" appearance="outline" title="Change style property of the element" style="width: 300px;">
             <mat-label>Style</mat-label>
             <textarea matInput
                       cdkTextareaAutosize
@@ -12,7 +12,25 @@
                       cdkAutosizeMinRows="1"
                       cdkAutosizeMaxRows="20" 
                       [(ngModel)]="elementProps['style']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
-          </mat-form-field>
+          </mat-form-field> -->
+
+          <form *ngIf="elementProps['style']!=undefined" class="p-4">
+            <fieldset class="border rounded p-2">
+              <legend class="w-auto h6 font-weight-bold text-left">&nbsp;Style 
+                <i class="fas fa-plus-circle" data-toggle="modal" data-target=".bd-example-modal-sm" 
+                style="cursor: pointer;" title="Add property" (click)=" property.value = ''; value.value = '';"></i>&nbsp;
+              </legend>
+              <span class="p-2" *ngFor="let item of styleProps; let i = index;">
+              <mat-form-field appearance="outline" title="Change style property of the element" style="width: 130px;">
+                <mat-label>{{item}}</mat-label>
+                <input matInput [name]="'value'+i" 
+                [(ngModel)] = "elementProps['style'][item]" 
+                (ngModelChange) = "propertySet(elementProps['id'])">
+              </mat-form-field>
+              <i class="fas fa-times" title="Click to remove property" (click)="deleteStylePropsrty(item)" style="color: red;cursor: pointer; vertical-align: super;"></i>
+              </span>
+            </fieldset>
+          </form>
           
           <mat-form-field *ngIf="elementProps['class']!=undefined" appearance="outline" title="Change class property of the element"  style="width: 300px;">
             <mat-label>Class</mat-label>
@@ -201,3 +219,30 @@
           <button *ngIf="true" mat-menu-item (click)="propertyGet(src);" title="Click to modify properties of element">Properties</button>
   </ng-template>
 </mat-menu>
+
+<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm ">
+    <div class="modal-content p-2">
+      
+      <span class="float-right">
+        <span class="h6 font-weight-bold" style="text-align: center;">Property</span>
+      <i class="fas fa-window-close fa-lg" data-dismiss="modal" style="color: red;float: right;cursor: pointer;margin:10px;"></i>
+      </span>
+      <mat-form-field appearance="outline" style="width: 200px;">
+        <mat-label>Name</mat-label>
+        <input matInput type="text" name = "property" #property>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" style="width: 200px;">
+        <mat-label>Value</mat-label>
+        <input matInput type="text" name ="value" #value>
+      </mat-form-field>
+      <span style="text-align: center;"> 
+      <button mat-raised-button color="primary" style="width:120px;" 
+      [disabled]="property.value =='' || value.value == ''"
+      data-dismiss="modal" (click) = "addStyleProperty(property.value,value.value)">Add Property</button>
+      </span>
+    </div>
+  </div>
+</div>
+
