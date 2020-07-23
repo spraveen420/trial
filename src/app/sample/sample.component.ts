@@ -102,10 +102,6 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
   }
   constructor() {}
 
-  arrayOne(count) {
-    return Array(count);
-  }
-
   onContextMenu(sourceElementID, contextMenuPosition, contextMenu, event: MouseEvent) {
     const selectdiv = sourceElementID;
     event.preventDefault();
@@ -164,6 +160,7 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
   close() {
     this.open = false;
     this.elementProps = {};
+    this.styleProps = [];
   }
 
   addStyleProperty(name, value) {
