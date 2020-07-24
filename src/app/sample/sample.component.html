@@ -1,5 +1,5 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="side" position="end" [(opened)]="open" style="width: 400px;">
+  <mat-sidenav #sidenav mode="side" position="end" [(opened)]="open" style="width: 350px;">
       <i class="fas fa-window-close fa-lg" (click)="close()" style="color: red;float: right;cursor: pointer;margin:10px;"></i>
       <br/>
       <h5 *ngIf="elementProps['name']!=undefined"><b><u>{{elementProps['name']}}&nbsp;({{elementProps['id']}})</u></b></h5>
@@ -14,20 +14,20 @@
                       [(ngModel)]="elementProps['style']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
           </mat-form-field> -->
 
-          <form *ngIf="elementProps['style']!=undefined" class="p-4">
+          <form *ngIf="elementProps['style']!=undefined" class="p-3">
             <fieldset class="border rounded p-2">
               <legend class="w-auto h6 font-weight-bold text-left">&nbsp;Style 
                 <i class="fas fa-plus-circle" data-toggle="modal" data-target=".bd-example-modal-sm" 
                 style="cursor: pointer;" title="Add property" (click)=" property.value = ''; value.value = '';"></i>&nbsp;
               </legend>
               <span class="p-2" *ngFor="let item of styleProps; let i = index;">
-              <mat-form-field appearance="outline" title="Change style property of the element" style="width: 130px;">
+              <mat-form-field appearance="outline" title="Change style property of the element" style="width: 100px;">
                 <mat-label>{{item}}</mat-label>
                 <input matInput [name]="'value'+i" 
                 [(ngModel)] = "elementProps['style'][item]" 
                 (ngModelChange) = "propertySet(elementProps['id'])">
               </mat-form-field>
-              <i class="fas fa-times" title="Click to remove property" (click)="deleteStylePropsrty(item)" style="color: red;cursor: pointer; vertical-align: super;"></i>
+              <i class="fas fa-times" title="Click to remove property" (click)="deleteStylePropsrty(item)" style="color: red;cursor: pointer; vertical-align: 200%;"></i>
               </span>
             </fieldset>
           </form>
@@ -210,10 +210,10 @@
 <mat-menu  #contextMenu="matMenu">
   <ng-template matMenuContent let-src="src" style="text-align: center;">
           <input *ngIf="dropdownValidate(src)" [(ngModel)]="option" mat-menu-item placeholder="option">
-          <span *ngIf="dropdownValidate(src)">
-          <span  *ngFor="let op of ddOptions; index as i">
-              <span [class]="labelClasses[i%4]" style="padding: 5px;border-radius: 10px;">{{op}}&nbsp;<i class="fas fa-times-circle" style="color: red;cursor: pointer;" title="Click to remove option" (click)="deleteOption(src,i)"></i></span>&nbsp;
-          </span><br/><br/></span>
+         
+          <mat-chip-list *ngIf="dropdownValidate(src)">
+              <mat-chip  *ngFor="let op of ddOptions; index as i">{{op}}&nbsp;<i class="fas fa-times-circle" style="color: red;cursor: pointer;" title="Click to remove option" (click)="deleteOption(src,i)"></i></mat-chip>&nbsp;
+          </mat-chip-list><br *ngIf="dropdownValidate(src)" />
 
           <button *ngIf="dropdownValidate(src)" mat-stroked-button color="primary" title="Click to add option" (click)="addOption(src)">Add</button>
           <button *ngIf="true" mat-menu-item (click)="propertyGet(src);" title="Click to modify properties of element">Properties</button>

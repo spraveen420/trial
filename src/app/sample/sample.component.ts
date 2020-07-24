@@ -84,7 +84,6 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     });
     Array.from(buttonElements).forEach((element, index) => {
       element.addEventListener('contextmenu', this.onContextMenu.bind(this, element.id, this.contextMenuPosition, this.contextMenu));
-      // element.addEventListener('click', this.dynamicClickEventProperties.bind(this, element.id));
     });
     Array.from(tableElements).forEach((element, index) => {
       element.addEventListener('contextmenu', this.onContextMenu.bind(this, element.id, this.contextMenuPosition, this.contextMenu));
@@ -105,6 +104,7 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
   onContextMenu(sourceElementID, contextMenuPosition, contextMenu, event: MouseEvent) {
     const selectdiv = sourceElementID;
     event.preventDefault();
+    this.option = '';
     if (!this.open) {
       contextMenuPosition.x = event.clientX + 'px';
       contextMenuPosition.y = event.clientY + 'px';

@@ -36,7 +36,8 @@ import { FormsModule } from '@angular/forms';
     MatSlideToggleModule,
     MatInputModule,
     MatButtonModule,
-    MatSelectModule
+    MatSelectModule,
+    MatChipsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
