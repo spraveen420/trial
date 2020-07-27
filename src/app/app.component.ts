@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AppService } from './app.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { NgxSpinnerService } from 'ngx-spinner';
 
 
@@ -11,7 +10,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 })
 export class AppComponent implements OnInit {
   // tslint:disable-next-line: max-line-length
-  constructor(private appService: AppService, public sanitize: DomSanitizer, private spinner: NgxSpinnerService) {
+  constructor(private appService: AppService, private spinner: NgxSpinnerService) {
     //  this.getData(this.fileName[this.num]);
   }
   content: string;
@@ -52,6 +51,7 @@ export class AppComponent implements OnInit {
     // content = content.split('class="btn ').join('ngDraggable class="btn ');
     // content = content.split('class="img-fluid"').join('ngDraggable class="img-fluid"');
         this.content = this.content.slice(0, 100) + this.content.slice(100).split('id=').join('ngDraggable id=');
+        this.content = this.content.split('sendData($event)').join('context.sendData($event)');
         this.spinner.hide();
       },
       err => {
@@ -92,6 +92,7 @@ export class AppComponent implements OnInit {
     doc2 = doc2.split('ngdraggable=""').join('');
     doc2 = doc2.split('ng-draggable').join('');
     doc2 = doc2.split(/transform: translate\(\-?\d*\.?\d*px, \-?\d*\.?\d*px\);/).join('');
+    doc2 = doc2.split('context.sendData($event)').join('sendData($event)');
     // doc2 = doc2.split(/transform: translate\(\-?\d*\.?\d*px, \-?\d*\.?\d*px\);/).join('');
     console.log(doc1);
     this.appService

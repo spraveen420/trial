@@ -4,6 +4,7 @@ import {
   MatMenuTrigger
 } from '@angular/material';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
+import { AppService } from '../app.service';
 @Component({
   selector: 'app-sample',
   templateUrl: './sample.component.html',
@@ -46,12 +47,36 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   contextMenuPosition = { x: '0px', y: '0px' };
 
-
+  constructor(private appService: AppService) {}
   ngOnInit(): void {
   }
   handleCompileErrorHandler(error: Error) {
     console.error(error);
   }
+  sendData(event) {
+    const data1 = new FormData(event.path[2]);
+    const object = {};
+    data1.forEach((value, key) => {
+    if (!Reflect.has(object, key)) {
+        object[key] = value;
+        return;
+    }
+    if (!Array.isArray(object[key])) {
+        object[key] = [object[key]];
+    }
+    object[key].push(value);
+  });
+    this.appService.sendReq(event.target.formMethod, event.target.formAction, object)
+    .subscribe((data) => {
+      console.log(JSON.stringify(data));
+      alert(JSON.stringify(data));
+    }, (err) => {
+      console.error(err);
+      alert(err.status + ' - ' + err.statusText);
+    }
+    );
+  }
+
 
   ngOnChanges(changes: SimpleChanges): void {
     this.open = false;
@@ -99,29 +124,30 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
       // selectElements.item(i).setAttribute('title', 'Right click to add options');
     // }
   }
-  constructor() {}
 
   onContextMenu(sourceElementID, contextMenuPosition, contextMenu, event: MouseEvent) {
     const selectdiv = sourceElementID;
     event.preventDefault();
     this.option = '';
-    if (!this.open) {
-      contextMenuPosition.x = event.clientX + 'px';
-      contextMenuPosition.y = event.clientY + 'px';
-      contextMenu.menuData = { src: selectdiv};
-      if (selectdiv.split(/[0-9+]/)[0] === 'dropdown') {
-        contextMenu.menu.focusFirstItem('mouse');
-        this.dropDown(selectdiv);
+    if (selectdiv !== '' && selectdiv !== undefined ) {
+      if (!this.open) {
+        contextMenuPosition.x = event.clientX + 'px';
+        contextMenuPosition.y = event.clientY + 'px';
+        contextMenu.menuData = { src: selectdiv};
+        if (selectdiv.split(/[0-9+]/)[0] === 'dropdown') {
+          contextMenu.menu.focusFirstItem('mouse');
+          this.dropDown(selectdiv);
+        }
+        contextMenu.openMenu();
+      } else {
+        const call = selectdiv.split(/[0-9+]/)[0];
+        let sample = {};
+        this.elementProps = {};
+        this.styleProps = [];
+        sample = this.elementGetFunctions[call](selectdiv);
+        this.elementProps = sample['props'];
+        this.styleProps = sample['prop'];
       }
-      contextMenu.openMenu();
-    } else {
-      const call = selectdiv.split(/[0-9+]/)[0];
-      let sample = {};
-      this.elementProps = {};
-      this.styleProps = [];
-      sample = this.elementGetFunctions[call](selectdiv);
-      this.elementProps = sample['props'];
-      this.styleProps = sample['prop'];
     }
   }
 

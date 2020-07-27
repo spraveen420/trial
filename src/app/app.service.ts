@@ -17,4 +17,8 @@ export class AppService {
   update(data): Observable<any> {
     return this.http.post(this.url + 'updateData', data, { responseType: 'text' as 'json' });
   }
+
+  sendReq(method, url, data): Observable<any>  {
+    return this.http.request(method, url, { body: data });
+  }
 }
