@@ -195,7 +195,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-      <div *ngIf="data" class="content" [p3x-compile]="data" 
+      <div *ngIf="data" #p3x class="content" [p3x-compile]="data" 
       [p3x-compile-ctx]="this"
       [p3x-compile-error-handler]="handleCompileErrorHandler"
       [p3x-compile-module]="dataModule"></div>

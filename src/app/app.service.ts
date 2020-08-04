@@ -9,7 +9,7 @@ export class AppService {
 
   constructor(private http: HttpClient) { }
 
-  url = 'http://localhost:8080/';
+  url = 'http://localhost:8081/';
   getData(name): Observable<string> {
     return this.http.get<string>(this.url + 'src/outputHtml/' + name, { responseType: 'text' as 'json' });
   }
