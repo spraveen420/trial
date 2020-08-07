@@ -12,7 +12,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AngularDraggableModule } from 'angular2-draggable';
 import { CompileModule} from 'p3x-angular-compile';
 import { MatMenuModule, MatSidenavModule, MatChipsModule,
-   MatIconModule, MatFormFieldModule, MatSlideToggleModule, MatInputModule, MatButtonModule, MatSelectModule } from '@angular/material';
+   MatIconModule, MatFormFieldModule, MatSlideToggleModule, MatInputModule, MatButtonModule, MatSelectModule, MatListModule } from '@angular/material';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -37,7 +37,8 @@ import { FormsModule } from '@angular/forms';
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
-    MatChipsModule
+    MatChipsModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]

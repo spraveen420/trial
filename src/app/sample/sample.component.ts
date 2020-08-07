@@ -26,9 +26,14 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
   };
   public option;
   ddOptions = [];
-  labelClasses = ['badge badge-primary', 'badge badge-success', 'badge badge-info',
-  'badge badge-warning'];
+  labelClasses = { post: 'badge badge-primary', get: 'badge badge-success',
+  put: 'badge badge-warning', delete: 'badge badge-danger'};
   open = false;
+  existingApiList = [{ action: '/api/sample', method: 'post'}, { action: '/api/connect', method: 'get'},
+  { action: '/api/trial', method: 'put'}, { action: '/api/service', method: 'delete'}];
+   newApiList = [{ action: '/newApi/sample', method: 'post'}, { action: '/newApi/connect', method: 'get'},
+   { action: '/newApi/trial', method: 'put'}, { action: '/newApi/service', method: 'delete'}];
+   baseURL = 'http://localhost:8081';
   elementGetFunctions = { dropdown: this.getDropDownProps, radio: this.getRadioCheckboxProps,
     checkbox: this.getRadioCheckboxProps, textbox: this.getTextboxProps, calendar: this.getCalendarProps,
     image: this.getImageProps, link: this.getLinkProps, table: this.getTableProps,
@@ -151,6 +156,10 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     }
   }
 
+  addURL() {
+
+  }
+
   dropDown(id) {
     const dd = document.getElementById(id) as HTMLSelectElement;
     this.ddOptions = Array.from(dd.options).map(op => op.label);
@@ -214,7 +223,7 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
 
   propertySet(id) {
     const call = id.split(/[0-9+]/)[0];
-    this.elementSetFunctions[call](id, this.elementProps);
+    this.elementSetFunctions[call](id, this.elementProps, this.baseURL);
     // this.close();
   }
 
@@ -473,12 +482,13 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     props['title'] = button.title;
     props['type'] = button.type;
     props['formmethod'] = button.formMethod;
-    props['formaction'] = button.formAction;
+    // tslint:disable-next-line: max-line-length
+    props['formaction'] = button.formAction.split(/http[s]?:\/\/(?:localhost|(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?))?(?:\:[0-9]{1,4})?/)[1];
     props['formtarget'] = button.formTarget;
     return {props, prop};
   }
 
-  setButtonProps(id, modProps) {
+  setButtonProps(id, modProps, baseURL) {
     const button = document.getElementById(id) as HTMLButtonElement;
     button.className = modProps['class'];
     // button.style.cssText = modProps['style'];
@@ -489,7 +499,7 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     button.title = modProps['title'];
     button.type = modProps['type'];
     button.formMethod = modProps['formmethod'];
-    button.formAction = modProps['formaction'];
+    button.formAction = baseURL + modProps['formaction'];
     button.formTarget = modProps['formtarget'];
   }
 

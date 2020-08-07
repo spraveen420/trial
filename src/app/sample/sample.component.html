@@ -17,7 +17,7 @@
           <form *ngIf="elementProps['style']!=undefined" class="p-3">
             <fieldset class="border rounded p-2">
               <legend class="w-auto h6 font-weight-bold text-left">&nbsp;Style 
-                <i class="fas fa-plus-circle" data-toggle="modal" data-target=".bd-example-modal-sm" 
+                <i class="fas fa-plus-circle" data-toggle="modal" data-target=".property-add" 
                 style="cursor: pointer;" title="Add property" (click)=" property.value = ''; value.value = '';"></i>&nbsp;
               </legend>
               <span class="p-2" *ngFor="let item of styleProps; let i = index;">
@@ -101,21 +101,29 @@
             </mat-select>
           </mat-form-field>
 
-          <mat-form-field *ngIf="elementProps['formaction']!=undefined" appearance="outline" title="Change formaction property of the button"  style="width: 300px;">
-            <mat-label>formaction</mat-label>
-            <textarea matInput placeholder="eg: http://localhost:8080/sample"
+          <mat-form-field *ngIf="elementProps['formaction']!=undefined" appearance="outline" title="Change baseURL"  style="width: 300px;">
+            <mat-label>BaseURL</mat-label>
+            <input matInput [(ngModel)] = "baseURL" (ngModelChange) = "propertySet(elementProps['id'])">
+          </mat-form-field>
+
+          <mat-form-field *ngIf="elementProps['formaction']!=undefined" appearance="outline" title="Change formaction property of the button"  style="width: 260px;">
+            <mat-label>url</mat-label>
+            <textarea matInput placeholder="eg: /api/sample"
                       cdkTextareaAutosize
                       #autosize="cdkTextareaAutosize"
                       cdkAutosizeMinRows="1"
-                      cdkAutosizeMaxRows="20" 
+                      cdkAutosizeMaxRows="20"
+                      readonly=true 
                       [(ngModel)]="elementProps['formaction']" (ngModelChange) = "propertySet(elementProps['id'])"></textarea>
-          </mat-form-field>
+          </mat-form-field>&nbsp;<span *ngIf="elementProps['formaction']!=undefined" class="material-icons" data-toggle="modal" data-target=".api-link" style="cursor: pointer;" title="Click to know api of existing services">info</span>
 
           <mat-form-field *ngIf="elementProps['formmethod']!=undefined" appearance="outline" title="Change formmethod property of button"  style="width: 300px;">
             <mat-label>formmethod</mat-label>
             <mat-select [(ngModel)]="elementProps['formmethod']" (ngModelChange) = "propertySet(elementProps['id'])">
-              <mat-option value="post">POST</mat-option>
               <mat-option value="get">GET</mat-option>
+              <mat-option value="post">POST</mat-option>
+              <mat-option value="put">PUT</mat-option>
+              <mat-option value="delete">DELETE</mat-option>
             </mat-select>
           </mat-form-field>
 
@@ -220,8 +228,8 @@
   </ng-template>
 </mat-menu>
 
-<div class="modal fade bd-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-sm ">
+<div class="modal fade property-add" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm sample">
     <div class="modal-content p-2">
       
       <span class="float-right">
@@ -242,6 +250,30 @@
       [disabled]="property.value =='' || value.value == ''"
       data-dismiss="modal" (click) = "addStyleProperty(property.value,value.value)">Add Property</button>
       </span>
+    </div>
+  </div>
+</div>
+
+
+<div class="modal fade api-link" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm sample1">
+    <div class="modal-content p-2">
+      <!-- <i class="fas fa-window-close fa-lg" data-dismiss="modal" style="color: red;float: right;cursor: pointer;margin-right:10px;"></i> -->
+      <mat-list *ngFor="let item of existingApiList; index as i">
+        <mat-list-item class="li" data-dismiss="modal" (click)="elementProps['formaction']=item.action;elementProps['formmethod']=item.method;propertySet(elementProps['id']);" style="cursor: pointer;" >
+          <span [class]="labelClasses[item.method]">{{item.method | uppercase}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+          {{item.action}}&nbsp;&nbsp;
+        </mat-list-item>
+      </mat-list>
+      <div *ngIf="newApiList.length!=0">
+      <span><b><u>New Service API's</u></b></span>
+      <mat-list *ngFor="let item of newApiList; index as i">
+        <mat-list-item class="li" data-dismiss="modal" (click)="elementProps['formaction']=item.action;elementProps['formmethod']=item.method;propertySet(elementProps['id']);" style="cursor: pointer;" >
+          <span [class]="labelClasses[item.method]">{{item.method | uppercase}}</span>&nbsp;&nbsp;&nbsp;&nbsp;
+          {{item.action}}&nbsp;&nbsp;
+        </mat-list-item>
+      </mat-list>
+      </div>
     </div>
   </div>
 </div>

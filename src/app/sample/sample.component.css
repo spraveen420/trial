@@ -7,12 +7,23 @@
     /* cursor: url('../../assets/filled-cross-hair.png'),auto; */
 
 }
-.modal-dialog {
+.sample {
   position: absolute;
   right: 15%;
   top: 15%;
   width: fit-content;
 
+}
+
+.li:hover {
+  background-color: lightgreen;
+}
+
+.sample1 {
+  position: absolute;
+  right: 9%;
+  /* bottom: 20%; */
+  width: fit-content;
 }
 
 .example-container {
