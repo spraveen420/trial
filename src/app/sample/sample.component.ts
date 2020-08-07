@@ -29,11 +29,11 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
   labelClasses = { post: 'badge badge-primary', get: 'badge badge-success',
   put: 'badge badge-warning', delete: 'badge badge-danger'};
   open = false;
-  existingApiList = [{ action: '/api/sample', method: 'post'}, { action: '/api/connect', method: 'get'},
-  { action: '/api/trial', method: 'put'}, { action: '/api/service', method: 'delete'}];
+  existingApiList = [{ action: '/api/store', method: 'post'}, { action: '/api/gather', method: 'get'},
+  { action: '/api/alter', method: 'put'}, { action: '/api/remove', method: 'delete'}];
    newApiList = [{ action: '/newApi/sample', method: 'post'}, { action: '/newApi/connect', method: 'get'},
    { action: '/newApi/trial', method: 'put'}, { action: '/newApi/service', method: 'delete'}];
-   baseURL = 'http://localhost:8081';
+   baseURL = 'http://localhost:8080';
   elementGetFunctions = { dropdown: this.getDropDownProps, radio: this.getRadioCheckboxProps,
     checkbox: this.getRadioCheckboxProps, textbox: this.getTextboxProps, calendar: this.getCalendarProps,
     image: this.getImageProps, link: this.getLinkProps, table: this.getTableProps,
@@ -154,10 +154,6 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
         this.styleProps = sample['prop'];
       }
     }
-  }
-
-  addURL() {
-
   }
 
   dropDown(id) {
