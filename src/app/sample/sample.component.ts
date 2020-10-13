@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewEncapsulation, AfterViewChecked, ViewChild, SimpleChanges, OnChanges } from '@angular/core';
 import { AngularDraggableModule } from 'angular2-draggable';
 import {
-  MatMenuTrigger
+  MatMenuTrigger, MatMenuModule, MatSidenavModule, MatIconModule, MatFormFieldModule, MatSlideToggleModule, MatInputModule, MatButtonModule, MatSelectModule, MatChipsModule, MatListModule, MatRadioModule, MatCheckboxModule
 } from '@angular/material';
 import {CdkTextareaAutosize} from '@angular/cdk/text-field';
 import { AppService } from '../app.service';
@@ -21,6 +21,18 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     // declarations: [],
     imports: [
   AngularDraggableModule,
+  MatMenuModule,
+  MatSidenavModule,
+  MatIconModule,
+  MatFormFieldModule,
+  MatSlideToggleModule,
+  MatInputModule,
+  MatButtonModule,
+  MatSelectModule,
+  MatChipsModule,
+  MatListModule,
+  MatCheckboxModule,
+    MatRadioModule
     ],
     exports: []
   };
@@ -51,6 +63,8 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
   contextMenu: MatMenuTrigger;
 
   contextMenuPosition = { x: '0px', y: '0px' };
+  previousId = '';
+  matMenuState = false;
 
   constructor(private appService: AppService) {}
   ngOnInit(): void {
@@ -121,13 +135,6 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
     Array.from(labelElements).forEach((element, index) => {
       element.addEventListener('contextmenu', this.onContextMenu.bind(this, element.id, this.contextMenuPosition, this.contextMenu));
     });
-
-    // for (let i = 0; i < selectElements.length; i++) {
-      // console.log("id",selectElements.item(i).id)
-      // tslint:disable-next-line: max-line-length
-      // selectElements.item(i).addEventListener('contextmenu', this.onContextMenu.bind(this, selectElements.item(i).id, this.contextMenuPosition, this.contextMenu));
-      // selectElements.item(i).setAttribute('title', 'Right click to add options');
-    // }
   }
 
   onContextMenu(sourceElementID, contextMenuPosition, contextMenu, event: MouseEvent) {
@@ -153,6 +160,24 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
         this.elementProps = sample['props'];
         this.styleProps = sample['prop'];
       }
+      if (this.previousId !== '') {
+        this.clearClass();
+      }
+      if (!document.getElementById(selectdiv).className.includes('context')) {
+        document.getElementById(selectdiv).className += ' context';
+        document.getElementById(selectdiv).blur();
+        this.previousId = selectdiv;
+      }
+    }
+  }
+
+  clearClass() {
+    document.getElementById(this.previousId).className = document.getElementById(this.previousId).className.split(' context').join('');
+  }
+
+  styleChange() {
+    if (!this.open && !this.matMenuState) {
+      this.clearClass();
     }
   }
 
@@ -206,7 +231,7 @@ export class SampleComponent implements OnInit, AfterViewChecked, OnChanges {
   }
 
   propertyGet(id) {
-   const call = id.split(/[0-9+]/)[0];
+   const call = id.split(/z?[0-9+]/)[0];
    let sample = {};
    this.elementProps = {};
    this.styleProps = [];

@@ -1,5 +1,5 @@
 <mat-sidenav-container class="example-container">
-  <mat-sidenav #sidenav mode="side" position="end" [(opened)]="open" style="width: 350px;">
+  <mat-sidenav #sidenav mode="side" position="end" [(opened)]="open" (closed)="styleChange()" style="width: 350px;">
       <i class="fas fa-window-close fa-lg" (click)="close()" style="color: red;float: right;cursor: pointer;margin:10px;"></i>
       <br/>
       <h5 *ngIf="elementProps['name']!=undefined"><b><u>{{elementProps['name']}}&nbsp;({{elementProps['id']}})</u></b></h5>
@@ -212,7 +212,8 @@
 
 
 <div style="visibility: hidden; position: fixed" [style.left]="contextMenuPosition.x"
-  [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu">
+  [style.top]="contextMenuPosition.y" [matMenuTriggerFor]="contextMenu" 
+  (menuOpened) = "matMenuState = true" (menuClosed) = "matMenuState = false; styleChange()" >
 </div>
 
 <mat-menu  #contextMenu="matMenu">

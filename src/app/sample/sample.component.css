@@ -4,7 +4,8 @@
     text-align: center;
     overflow: auto;
     margin: 1%;
-    /* cursor: url('../../assets/filled-cross-hair.png'),auto; */
+    /* cursor: url("../../assets/dot-cursor.png"), crosshair; */
+    /* cursor: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/9632/sad.png"), auto; */
 
 }
 .sample {
@@ -42,3 +43,6 @@
   .ng-dragging {
     cursor: grabbing;
   }
+.context {
+  border: 1px solid red;
+}
